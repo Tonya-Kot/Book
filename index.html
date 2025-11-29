@@ -6,45 +6,56 @@
 <title>Читательский дневник</title>
 <style>
   body { font-family: Arial, sans-serif; margin: 20px; }
-  input { margin: 5px; }
-  button { margin: 5px; }
-  ul { padding-left: 20px; }
+  input { margin-right: 10px; }
+  button { margin-right: 10px; }
+  ul { list-style-type: disc; padding-left: 20px; }
+  li { margin-bottom: 8px; }
 </style>
 </head>
 <body>
 
 <h2>Мой читательский дневник</h2>
 
-<!-- Форма для добавления книги -->
-<input type="text" id="bookTitle" placeholder="Название книги" />
+<!-- Формы ввода -->
+<input type="text" id="bookTitle" placeholder="Название книги"/>
 <button onclick="addBook()">Добавить</button>
 
 <h3>Прочитанные книги:</h3>
 <ul id="bookList"></ul>
 
 <script>
-  let books = [];
+  // массив для хранения книг
+  const books = [];
 
+  // функция добавления книги
   function addBook() {
-    const title = document.getElementById('bookTitle').value;
-    if (title) {
-      books.push(title);
-      document.getElementById('bookTitle').value = '';
-      renderList();
+    const titleInput = document.getElementById('bookTitle');
+    const title = titleInput.value.trim();
+    if (title !== "") {
+      books.push(title); // добавляем в массив
+      titleInput.value = ""; // очищаем поле ввода
+      renderList(); // обновляем отображение списка
+    } else {
+      alert("Пожалуйста, введите название книги");
     }
   }
 
+  // функция отображения списка
   function renderList() {
-    const list = document.getElementById('bookList');
-    list.innerHTML = '';
+    const listElement = document.getElementById('bookList');
+    listElement.innerHTML = ""; // очищаем текущий список
     books.forEach((book, index) => {
-      list.innerHTML += `<li>${book} <button onclick="removeBook(${index})">Удалить</button></li>`;
+      // создаем элемент списка с кнопкой удаления
+      const li = document.createElement('li');
+      li.innerHTML = `${book} <button onclick="removeBook(${index})">Удалить</button>`;
+      listElement.appendChild(li);
     });
   }
 
+  // функция удаления книги
   function removeBook(index) {
-    books.splice(index, 1);
-    renderList();
+    books.splice(index, 1); // удаляем по индексу
+    renderList(); // обновляем отображение
   }
 </script>
 
