@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Читательский дневник</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  input { margin: 5px; }
+  button { margin: 5px; }
+  ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+
+<h2>Мой читательский дневник</h2>
+
+<!-- Форма для добавления книги -->
+<input type="text" id="bookTitle" placeholder="Название книги" />
+<button onclick="addBook()">Добавить</button>
+
+<h3>Прочитанные книги:</h3>
+<ul id="bookList"></ul>
+
+<script>
+  let books = [];
+
+  function addBook() {
+    const title = document.getElementById('bookTitle').value;
+    if (title) {
+      books.push(title);
+      document.getElementById('bookTitle').value = '';
+      renderList();
+    }
+  }
+
+  function renderList() {
+    const list = document.getElementById('bookList');
+    list.innerHTML = '';
+    books.forEach((book, index) => {
+      list.innerHTML += `<li>${book} <button onclick="removeBook(${index})">Удалить</button></li>`;
+    });
+  }
+
+  function removeBook(index) {
+    books.splice(index, 1);
+    renderList();
+  }
+</script>
+
+</body>
+</html>
